@@ -4,12 +4,10 @@ import entities.Actor;
 import entities.Movie;
 import entities.Rating;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.OptionalDouble;
 
 /**
  * A DTO for the {@link entities.Movie} entity
@@ -19,7 +17,7 @@ public class MovieDTO implements Serializable
     private final Integer id;
     private final String title;
     private final int year;
-    private final double rating;
+    private  double rating = 0.0;
     private final List<ActorInnerDTO> actors = new ArrayList<>();
 
     public MovieDTO(Integer id, String title, int year, double rating)
@@ -38,13 +36,18 @@ public class MovieDTO implements Serializable
         movie.getActors().forEach( actor -> {
             actors.add(new ActorInnerDTO(actor));
         });
-        // calculate rating avg
+
+        // Beregning af gennemsnit rating ved hjælp af for-each
         double ratingSum = 0.0;
         for (Rating rating: movie.getRatings())
         {
             ratingSum += rating.getRating();
         }
         this.rating = ratingSum / movie.getRatings().size();
+
+        // Beregning af gennemsnit rating ved hjælp af streams
+        OptionalDouble ratingAverage = movie.getRatings().stream().mapToInt(Rating::getRating).average();
+        this.rating = ratingAverage.isPresent() ? ratingAverage.getAsDouble() : 0.0;
     }
 
     public static List<MovieDTO> getDTOs(List<Movie> movies)
