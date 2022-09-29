@@ -7,6 +7,9 @@ carefully at the MovieDTO class.
 
 This project is built on start code for projects and exercises given in Flow-1
 
+## Tutorial
+Watch the [video on Panopto](https://cphbusiness.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=9f689178-b4b7-4bbf-96ce-af1f0126ff50) with full demo
+
 ## The database
 ![EER diagram](documentation/imdb.png)
 
